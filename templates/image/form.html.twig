@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle image
+{% endblock %}
+
+{% block body %}
+	<div class="container" style="max-width: 720px; margin: 2rem auto; padding: 2rem;">
+		<h1>Ajouter une image</h1>
+
+		{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+		{% if not form.vars.valid %}
+			<div style="background-color: #f8d7da; color: #721c24; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; border: 1px solid #f5c6cb; width: fit-content;">
+				<strong>Erreurs de validation</strong>
+				{{ form_errors(form) }}
+			</div>
+		{% endif %}
+
+		{{ form_row(form.title) }}
+		{{ form_row(form.file) }}
+		{{ form_row(form.alt) }}
+		{{ form_row(form.description) }}
+		{{ form_row(form.categorie) }}
+		{{ form_row(form.publishedAt) }}
+
+		<button class="btn btn-primary mt-3" type="submit">Enregistrer</button>
+		{{ form_end(form) }}
+	</div>
+{% endblock %}

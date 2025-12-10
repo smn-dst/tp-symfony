@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des images{% endblock %}
+
+{% block body %}
+	<div class="container" style="max-width: 1200px; margin: 2rem auto; padding: 2rem;">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<h1>Liste des images</h1>
+			<a href="{{ path('app_image_new') }}" class="btn btn-primary">Créer un nouvel élément</a>
+		</div>
+
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success alert-dismissible fade show" role="alert">
+				{{ message }}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		{% endfor %}
+
+		{% for message in app.flashes('error') %}
+			<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				{{ message }}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		{% endfor %}
+
+		{% if images is empty %}
+			<div class="alert alert-info" role="alert">
+				<p class="mb-0">Aucune image n'a été ajoutée pour le moment.</p>
+				<a href="{{ path('app_image_new') }}" class="btn btn-primary mt-2">Ajouter une première image</a>
+			</div>
+		{% else %}
+			<div class="row">
+				{% for image in images %}
+					<div class="col-md-6 col-lg-4 mb-4">
+						<div class="card h-100">
+							{% if image.file %}
+								<img src="{{ asset(image.file) }}" class="card-img-top" alt="{{ image.alt }}" style="height: 200px; object-fit: cover;">
+							{% endif %}
+							<div class="card-body">
+								<h5 class="card-title">{{ image.title }}</h5>
+								<p class="card-text">
+									<strong>Catégorie :</strong> {{ image.categorie }}<br>
+									<strong>Texte alternatif :</strong> {{ image.alt }}<br>
+									{% if image.description %}
+										<strong>Description :</strong> {{ image.description }}<br>
+									{% endif %}
+									<strong>Date de publication :</strong> {{ image.publishedAt|date('d/m/Y') }}
+								</p>
+							</div>
+							<div class="card-footer text-muted">
+								<small>ID : #{{ image.id }}</small>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
+

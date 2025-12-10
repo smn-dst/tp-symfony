@@ -10,20 +10,38 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ImageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('titre', TextType::class, [
+            ->add('title', TextType::class, [
                 'label' => 'Titre',
                 'attr' => [
                     'placeholder' => 'Ex : Couché de soleil',
                 ],
             ])
             ->add('file', FileType::class, [
-                'label' => 'fichier image',
+                'label' => 'Fichier image',
+                'mapped' => false,
+                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Le fichier image est obligatoire.',
+                    ]),
+                    new File([
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                            'image/jpg',
+                            'image/webp',
+                        ],
+                        'mimeTypesMessage' => 'Merci de fournir un fichier image valide (PNG, JPEG ou WebP).',
+                    ]),
+                ],
             ])
             ->add('alt', TextType::class, [
                 'label' => 'Texte alternatif',
@@ -36,7 +54,13 @@ class ImageType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'rows' => 4,
-                    'placeholder' => 'Quelques détails sur l’image (optionnel)',
+                    'placeholder' => 'Quelques détails sur l\'image (optionnel)',
+                ],
+            ])
+            ->add('categorie', TextType::class, [
+                'label' => 'Catégorie',
+                'attr' => [
+                    'placeholder' => 'Ex : Nature, Architecture, Portrait...',
                 ],
             ])
             ->add('publishedAt', DateType::class, [
