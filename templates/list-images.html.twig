@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Gallerie images
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block mainContent %}
+    <h1>Voici ma liste d'images :</h1>
+
+    {% if images is not empty %}
+        <section class="images__content">
+            {% for image in images %}
+                <div class="images__content--img">
+                    <img src="{{ asset(image.src) }}" alt="{{ image.title }}">
+                    <div class="images__content--img-date">
+                        {{ image.createdAt|format_datetime('short', 'none', locale: 'fr') }}
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+    {% endif %}
+{% endblock %}
+
+
+{# {% block javascripts %}
+    <script src="script.js" />
+{% endblock %} #}

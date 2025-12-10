@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle image{% endblock %}
+
+{% block body %}
+<div class="container" style="max-width: 720px; margin: 2rem auto;">
+    <h1>Ajouter une image</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.titre) }}
+        {{ form_row(form.file) }}
+        {{ form_row(form.alt) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.publishedAt) }}
+
+        <button class="btn btn-primary" type="submit">Enregistrer</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
+
